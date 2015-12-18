@@ -46,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func checkAuthorization() {
         print("Location services enabled: \(CLLocationManager.locationServicesEnabled())")
+        
+        // Requesting authorization silently fails if you don't have NSLocationAlwaysUsageDescription in your info.plist.
         locationManager!.requestAlwaysAuthorization()
     }
     
