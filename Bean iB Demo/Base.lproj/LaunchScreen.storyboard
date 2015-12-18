@@ -13,11 +13,54 @@
                         <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleToFill" id="kKV-NH-m1P">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iBeacons found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q69-DE-jY3">
+                                <rect key="frame" x="241" y="374" width="119" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="119" id="3NW-kE-ffZ"/>
+                                    <constraint firstAttribute="height" constant="21" id="f3Z-Gr-IPJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Outside region" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2D-Gi-HPJ">
+                                <rect key="frame" x="244" y="204" width="113" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="113" id="oiS-6s-B0D"/>
+                                    <constraint firstAttribute="height" constant="21" id="sBz-3W-amm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHC-EP-lcG">
+                                <rect key="frame" x="205" y="233" width="191" height="133"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="133" id="Yyz-gf-IGk"/>
+                                    <constraint firstAttribute="width" constant="191" id="frx-4e-SVu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="144"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="O2D-Gi-HPJ" firstAttribute="centerX" secondItem="kKV-NH-m1P" secondAttribute="centerX" id="5Pe-of-jc5"/>
+                            <constraint firstItem="Q69-DE-jY3" firstAttribute="top" secondItem="BHC-EP-lcG" secondAttribute="bottom" constant="8" id="FXm-r6-83M"/>
+                            <constraint firstItem="BHC-EP-lcG" firstAttribute="top" secondItem="O2D-Gi-HPJ" secondAttribute="bottom" constant="8" id="Iey-8A-OrG"/>
+                            <constraint firstItem="BHC-EP-lcG" firstAttribute="centerY" secondItem="kKV-NH-m1P" secondAttribute="centerY" id="iyi-up-QkU"/>
+                            <constraint firstItem="Q69-DE-jY3" firstAttribute="centerX" secondItem="kKV-NH-m1P" secondAttribute="centerX" id="lTb-SR-wYx"/>
+                            <constraint firstItem="BHC-EP-lcG" firstAttribute="centerX" secondItem="kKV-NH-m1P" secondAttribute="centerX" id="yZe-2T-KGy"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
