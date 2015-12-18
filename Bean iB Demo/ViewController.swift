@@ -9,11 +9,15 @@
 import UIKit
 
 class ViewController: UIViewController, BeaconInfoDelegate {
+    
+    // MARK: - Interface Builder
 
     @IBOutlet var container: UIView!
     @IBOutlet weak var insideRegionLabel: UILabel!
     @IBOutlet weak var beaconCountLabel: UILabel!
     @IBOutlet weak var beaconsFoundLabel: UILabel!
+    
+    // MARK: - UIViewController
     
     override func viewDidLoad() {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -23,6 +27,8 @@ class ViewController: UIViewController, BeaconInfoDelegate {
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
+    
+    // MARK: - BeaconInfoDelegate
     
     func foundBeacons(num: Int) {
         beaconCountLabel.text = "\(num)"
