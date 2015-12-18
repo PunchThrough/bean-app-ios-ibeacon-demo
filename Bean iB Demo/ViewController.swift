@@ -31,11 +31,12 @@ class ViewController: UIViewController, BeaconInfoDelegate {
     
     func enteredRegion() {
         insideRegionLabel.text = "Inside region"
+        self.view.backgroundColor = UIColor(red:0.18, green:0.80, blue:0.44, alpha:1.0)  // Flat UI: Emerald
     }
     
     func exitedRegion() {
         insideRegionLabel.text = "Outside region"
+        self.view.backgroundColor = UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0)  // Flat UI: Peter River
     }
 
 }
-
