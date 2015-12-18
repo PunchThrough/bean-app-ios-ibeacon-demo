@@ -1,6 +1,12 @@
 import UIKit
 import CoreLocation
 
+protocol BeaconInfoDelegate {
+    func foundBeacons(num: Int)
+    func enteredRegion()
+    func exitedRegion()
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     
@@ -11,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     // CLLocationManager is really, really tricky to use properly. Check out the Apple docs for guidance:
     // https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html
     var locationManager: CLLocationManager?
+    
+    var delegate: BeaconInfoDelegate?
     
     var authStatusStrings = [
         CLAuthorizationStatus.NotDetermined: "Not determined",
@@ -68,10 +76,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         print("Entered region: \(region.identifier)")
+        delegate?.enteredRegion()
     }
     
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         print("Exited region: \(region.identifier)")
+        delegate?.exitedRegion()
     }
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
@@ -81,6 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 print("    RSSI: \(beacon.rssi)")
             }
         }
+        delegate?.foundBeacons(beacons.count)
     }
     
     // MARK: Handling errors

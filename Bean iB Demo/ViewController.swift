@@ -8,18 +8,34 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, BeaconInfoDelegate {
 
+    @IBOutlet var container: UIView!
+    @IBOutlet weak var insideRegionLabel: UILabel!
+    @IBOutlet weak var beaconCountLabel: UILabel!
+    @IBOutlet weak var beaconsFoundLabel: UILabel!
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.delegate = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func foundBeacons(num: Int) {
+        beaconCountLabel.text = "\(num)"
+        if (num == 1) {
+            beaconsFoundLabel.text = "iBeacon found"
+        } else {
+            beaconsFoundLabel.text = "iBeacons found"
+        }
     }
-
+    
+    func enteredRegion() {
+        insideRegionLabel.text = "Inside region"
+    }
+    
+    func exitedRegion() {
+        insideRegionLabel.text = "Outside region"
+    }
 
 }
 
