@@ -1,46 +1,97 @@
-//
-//  AppDelegate.swift
-//  Bean iB Demo
-//
-//  Created by Matthew Lewis on 12/18/15.
-//  Copyright © 2015 Punch Through Design. All rights reserved.
-//
-
 import UIKit
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
+    
+    // MARK: - Local variables
 
     var window: UIWindow?
 
+    // CLLocationManager is really, really tricky to use properly. Check out the Apple docs for guidance:
+    // https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html
+    var locationManager: CLLocationManager?
+    
+    var authStatusStrings = [
+        CLAuthorizationStatus.NotDetermined: "Not determined",
+        CLAuthorizationStatus.Restricted: "Restricted",
+        CLAuthorizationStatus.Denied: "Denied",
+        CLAuthorizationStatus.AuthorizedAlways: "Authorized always",
+        CLAuthorizationStatus.AuthorizedWhenInUse: "Authorized when in use",
+    ]
+    
+    // MARK: - AppDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        setupLocationManager()
+        checkAuthorization()
+        subscribeToBeacons()
         return true
     }
-
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    // MARK: - Set up beacon monitoring
+    
+    func setupLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager!.delegate = self
     }
-
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    func checkAuthorization() {
+        print("Location services enabled: \(CLLocationManager.locationServicesEnabled())")
+        locationManager!.requestAlwaysAuthorization()
     }
-
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    func subscribeToBeacons() {
+        print("Device supports Bluetooth beacon ranging: \(CLLocationManager.isRangingAvailable())")
+        
+        let uuid = NSUUID.init(UUIDString: "A495DEAD-C5B1-4B44-B512-1370F02D74DE")
+        let major: CLBeaconMajorValue = 0xBEEF
+        let minor: CLBeaconMinorValue = 0xCAFE
+        
+        let region = CLBeaconRegion(proximityUUID: uuid!, major: major, minor: minor, identifier: "Bean iBeacon")
+        
+        locationManager!.startMonitoringForRegion(region)
+        locationManager!.startRangingBeaconsInRegion(region)
+        
+        let majorHex = String(format: "%X", major)
+        let minorHex = String(format: "%X", minor)
+        print("Scanning for iBeacons with UUID: \(uuid!.UUIDString), major: \(majorHex), minor: \(minorHex)")
     }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    // MARK: - CLLocationManagerDelegate
+    
+    // MARK: Incoming data
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("Location auth status changed: \(authStatusStrings[status]!)")
     }
-
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("Entered region: \(region.identifier)")
     }
-
+    
+    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+        print("Exited region: \(region.identifier)")
+    }
+    
+    func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+        if (beacons.count > 0) {
+            print("Found \(beacons.count) iBeacon(s) in region: \(region.identifier)")
+            for beacon in beacons {
+                print("    RSSI: \(beacon.rssi)")
+            }
+        }
+    }
+    
+    // MARK: Handling errors
+    
+    func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
+        print("Monitoring failed for region: \(region?.identifier), error: \(error)")
+    }
+    
+    func locationManager(manager: CLLocationManager, rangingBeaconsDidFailForRegion region: CLBeaconRegion, withError error: NSError) {
+        print("Ranging beacons failed for region: \(region.identifier), error: \(error)")        
+    }
 
 }
 
