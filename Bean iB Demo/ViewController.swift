@@ -20,6 +20,10 @@ class ViewController: UIViewController, BeaconInfoDelegate {
         appDelegate.delegate = self
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     func foundBeacons(num: Int) {
         beaconCountLabel.text = "\(num)"
         if (num == 1) {
