@@ -1,5 +1,8 @@
 # Bean iBeacon Demo
 
+<img src="http://i.imgur.com/7poKrB7.jpg" width="30%">
+<img src="http://i.imgur.com/HCaVNKS.jpg" width="30%">
+
 This app looks for any nearby iBeacons with the following ID:
 
 * UUID: `A495DEAD-C5B1-4B44-B512-1370F02D74DE`
